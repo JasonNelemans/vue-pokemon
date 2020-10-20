@@ -13,9 +13,17 @@ export default {
       .then(response => {
         return response.json();
       })
-      .then(jsonData => {
-        console.log('data: ', jsonData)
+      .then(allPokemon => {
+        allPokemon.results.forEach(pokemon => this.fetchPokemonData(pokemon))
       });
+  },
+  methods: {
+    fetchPokemonData(pokemon: any) {
+      const url = pokemon.url;
+      fetch(url, { method: "get"})
+        .then(response => response.json())
+        .then(pokeData => console.log('pokeData: ', pokeData))
+    }
   }
 }
 </script>
