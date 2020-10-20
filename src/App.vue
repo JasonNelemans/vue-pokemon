@@ -1,12 +1,7 @@
 <template>
   <div id="app">
     <div id="content">
-      <div id="nav">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/categories">Categories</router-link> |
-        <router-link to="/random">Randomizer</router-link> |
-        <router-link to="/pokemon">Pokemon</router-link>
-      </div>
+      <Navbar />
       <router-view />
     </div>
     <Footer />
@@ -15,14 +10,21 @@
 
 <script lang="ts">
 import Footer from "@/components/Footer.vue";
+import Navbar from "@/components/Navbar.vue";
+
 export default {
   components: {
-    Footer
+    Footer,
+    Navbar
   }
 };
 </script>
 
 <style lang="scss">
+html, body {
+  margin: 0 auto;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -37,18 +39,5 @@ export default {
 
 #content {
   flex-grow: 1;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>
