@@ -1,18 +1,21 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
-
-@Component({
-  components: {
-    HelloWorld
+export default {
+  name: 'home',
+  mounted: function() {
+    fetch("https://pokeapi.co/api/v2/pokemon?limit=151%27", {
+      method: "get"
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(jsonData => {
+        console.log('data: ', jsonData)
+      });
   }
-})
-export default class Home extends Vue {}
+}
 </script>
