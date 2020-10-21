@@ -43,6 +43,7 @@ body {
 #stretch {
   flex-grow: 1;
 }
+
 .content {
   display: flex;
   justify-content: center;
@@ -50,12 +51,13 @@ body {
   flex-direction: column;
   padding-top: 115px;
   padding-bottom: 20px;
-  width: calc(100% - 0px);
   min-height: 80vh;
+  width: calc(100% - 0px);
+  background: linear-gradient(to bottom, #C0C0C0 0%, #B1B1B1 100%);
+  
   font-family: "Acme", arial;
   font-size: 1rem;
   font-weight: normal;
-  background: linear-gradient(to bottom, #C0C0C0 0%, #B1B1B1 100%);
 
   h1 {
     color: white;

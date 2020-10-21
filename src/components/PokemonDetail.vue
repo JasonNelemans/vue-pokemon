@@ -44,6 +44,9 @@
 <script lang="ts">
   export default {
     name: "pokemon",
+    props: {
+      id: Number
+    },
     data() {
       return {
         pokemon: {}
@@ -54,8 +57,7 @@
     },
     methods: {
       fetchPokemon() {
-        const id = this.$route.params.id
-        fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
+        fetch(`https://pokeapi.co/api/v2/pokemon/${this.id}`, {
         method: "get"
       })
         .then(response => {
