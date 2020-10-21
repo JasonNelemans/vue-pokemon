@@ -4,14 +4,16 @@
     <div class="list">
       <article v-for="(pokemon, index) in pokemons" :key="index">
         <router-link :to="`/pokemon/${pokemon.id}/`">
+        <div class="image">
           <img
             :src="
               `https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`
             "
-            width="96"
-            height="96"
+            width="105"
+            height="105"
             alt="pokemon"
           />
+          </div>
           <h3>{{ pokemon.name }}</h3>
           Type:
           <div
@@ -89,9 +91,10 @@ export default {
     margin: 7px;
     cursor: pointer;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 10px 10px rgba(0, 0, 0, 0.2);
+    border: 4px solid #FFCB05;
 
     h3 {
-      margin: 0;
+      margin: 0 auto;
     }
 
     .type-list {

@@ -55,7 +55,7 @@ body {
   font-family: "Acme", arial;
   font-size: 1rem;
   font-weight: normal;
-  background: linear-gradient(315deg, #3c3a3a 0%, #7f8c8d 74%);
+  background: linear-gradient(to bottom, #C0C0C0 0%, #B1B1B1 100%);
 
   h1 {
     color: white;
