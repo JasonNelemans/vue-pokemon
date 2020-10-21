@@ -21,7 +21,8 @@ export default {
 </script>
 
 <style lang="scss">
-html, body {
+html,
+body {
   margin: 0 auto;
 }
 

@@ -13,13 +13,15 @@
   border-bottom: 15px solid #222224;
   background-color: #f00000;
   text-align: center;
+  position: fixed;
+  width: 100%;
 
   a {
     font-weight: bold;
     color: #222224;
 
     &.router-link-exact-active {
-      color: 	#f0f0f0;
+      color: #f0f0f0;
     }
   }
 }
