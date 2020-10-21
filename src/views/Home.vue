@@ -78,9 +78,10 @@ export default {
   grid-gap: 25px;
   width: 100%;
   max-width: 800px;
+  color: #fff;
 
   article {
-    background-color: #efefef;
+    background: linear-gradient(to right top, #3d7dca, #306bb3, #225a9c, #134a86, #003a70);
     padding-top: 15px;
     text-align: center;
     text-transform: capitalize;
