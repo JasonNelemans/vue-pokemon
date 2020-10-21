@@ -43,7 +43,7 @@
 
 <script lang="ts">
   export default {
-    name: "pokemon",
+    name: "pokemon-detail",
     props: {
       id: Number
     },
