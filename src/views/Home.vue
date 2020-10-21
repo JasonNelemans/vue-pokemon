@@ -3,26 +3,28 @@
     <h1>Home</h1>
     <div class="list">
       <article v-for="(pokemon, index) in pokemons" :key="index">
-        <img
-          :src="
-            `https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`
-          "
-          width="96"
-          height="96"
-          alt="pokemon"
-        />
-        <h3>{{ pokemon.name }}</h3>
-        Type:
-        <div
-          v-for="(type, index) in pokemon.types"
-          :key="index"
-          class="type-list"
-        >
-          <p>• {{ type.type.name }}</p>
-        </div>
-        <p>Height: {{ pokemon.height }}</p>
-        <p>Weight: {{ pokemon.weight }}</p>
-        <p>Base experience: {{ pokemon.base_experience }}</p>
+        <router-link :to="`/pokemon/${pokemon.id}/`">
+          <img
+            :src="
+              `https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`
+            "
+            width="96"
+            height="96"
+            alt="pokemon"
+          />
+          <h3>{{ pokemon.name }}</h3>
+          Type:
+          <div
+            v-for="(type, index) in pokemon.types"
+            :key="index"
+            class="type-list"
+          >
+            <p>• {{ type.type.name }}</p>
+          </div>
+          <p>Height: {{ pokemon.height }}</p>
+          <p>Weight: {{ pokemon.weight }}</p>
+          <p>Base experience: {{ pokemon.base_experience }}</p>
+        </router-link>
       </article>
     </div>
   </div>
@@ -70,25 +72,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.home {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding-top: 115px;
-  padding-bottom: 20px;
-  width: calc(100% - 0px);
-  min-height: calc(100vh - 0px);
-  font-family: "Acme", arial;
-  font-size: 1rem;
-  font-weight: normal;
-  background: linear-gradient(315deg, #3c3a3a 0%, #7f8c8d 74%);
-
-  h1 {
-    color: white;
-  }
-}
-
 .list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -116,6 +99,11 @@ export default {
       p {
         margin: 10px 5px 0px 5px;
       }
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
     }
   }
 }

@@ -1,8 +1,10 @@
 <template>
   <div id="app">
-    <div id="content">
-      <Navbar />
-      <router-view />
+    <div id="stretch">
+        <Navbar />
+        <div class="content">
+          <router-view />
+        </div>
     </div>
     <Footer />
   </div>
@@ -38,7 +40,25 @@ body {
   flex-direction: column;
 }
 
-#content {
+#stretch {
   flex-grow: 1;
+}
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 115px;
+  padding-bottom: 20px;
+  width: calc(100% - 0px);
+  min-height: 80vh;
+  font-family: "Acme", arial;
+  font-size: 1rem;
+  font-weight: normal;
+  background: linear-gradient(315deg, #3c3a3a 0%, #7f8c8d 74%);
+
+  h1 {
+    color: white;
+  }
 }
 </style>

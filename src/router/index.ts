@@ -25,7 +25,7 @@ const routes: Array<RouteConfig> = [
     component: Random
   },
   {
-    path: "/pokemon",
+    path: "/pokemon/:id",
     name: "Pokemon",
     component: Pokemon
   }

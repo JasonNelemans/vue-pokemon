@@ -2,8 +2,7 @@
   <div class="navbar">
     <router-link to="/">Home</router-link> |
     <router-link to="/categories">Categories</router-link> |
-    <router-link to="/random">Randomizer</router-link> |
-    <router-link to="/pokemon">Pokemon</router-link>
+    <router-link to="/random">Randomizer</router-link>
   </div>
 </template>
 
