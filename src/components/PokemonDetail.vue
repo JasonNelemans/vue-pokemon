@@ -38,18 +38,25 @@
       </div>
       <router-link to="/"><button class="home-button">Back to Home</button></router-link>
     </div>
+    <RelatedPokemon v-if="typeUrl" :typeUrl="typeUrl" />
   </div>
 </template>
 
 <script lang="ts">
+  import RelatedPokemon from "@/components/RelatedPokemon.vue"
+
   export default {
     name: "pokemon-detail",
+    components: {
+      RelatedPokemon
+    },
     props: {
       id: Number
     },
     data() {
       return {
-        pokemon: {}
+        pokemon: {},
+        typeUrl: ''
       }
     },
     mounted() {
@@ -67,11 +74,18 @@
           this.pokemon = pokemon;
         })
         .catch(error => console.log("error: ", error));
+      },
+      readTypeUrl() {
+        const url = this.pokemon.types[0].type.url
+        this.typeUrl = url
       }
     },
     watch: {
       id() {
         this.fetchPokemon();
+      },
+      pokemon() {
+        this.readTypeUrl();
       }
     }
   }
@@ -81,7 +95,8 @@
   .detail {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
+    flex-direction: column;
     padding: 30px;
     width: calc(100% - 20px);
     color: #fff;

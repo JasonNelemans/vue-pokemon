@@ -1,5 +1,5 @@
 <template>
-  <div class="random">
+  <div>
     <button class="randomize" @click="randomizeId">Randomize</button>
     <PokemonDetail v-if="id" :id="id" />
   </div>
@@ -14,7 +14,7 @@
     },
     data() {
       return {
-        id: null as null | string
+        id: null as null | number
       }
     },
     mounted() {
@@ -23,7 +23,7 @@
     methods: {
       randomizeId() {
         const randomId = Math.floor(Math.random() * 1050) + 1  
-        this.id = `${randomId}`;
+        this.id = randomId;
       }
     },
   }
