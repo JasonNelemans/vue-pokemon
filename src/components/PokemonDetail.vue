@@ -68,6 +68,11 @@
         })
         .catch(error => console.log("error: ", error));
       }
+    },
+    watch: {
+      id() {
+        this.fetchPokemon();
+      }
     }
   }
 </script>
