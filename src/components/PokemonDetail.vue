@@ -38,7 +38,12 @@
       </div>
       <router-link to="/"><button class="home-button">Back to Home</button></router-link>
     </div>
-    <RelatedPokemon v-if="typeUrl" :typeUrl="typeUrl" />
+    <div v-if="types">
+      <div class="related" v-for="(type, index) in types" :key="index" >
+        <h3>Other {{ type.type.name }} Pokemon</h3>
+        <RelatedPokemon :typeUrl="type.type.url" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -51,12 +56,12 @@
       RelatedPokemon
     },
     props: {
-      id: Number
+      id: String
     },
     data() {
       return {
         pokemon: {},
-        typeUrl: ''
+        types: []
       }
     },
     mounted() {
@@ -75,9 +80,10 @@
         })
         .catch(error => console.log("error: ", error));
       },
-      readTypeUrl() {
-        const url = this.pokemon.types[0].type.url
-        this.typeUrl = url
+      getTypes() {
+        this.pokemon.types.forEach((type: any) => {
+          return this.types.push(type);
+        });
       }
     },
     watch: {
@@ -85,7 +91,7 @@
         this.fetchPokemon();
       },
       pokemon() {
-        this.readTypeUrl();
+        this.getTypes();
       }
     }
   }
@@ -191,6 +197,15 @@
         font-size: 1.2rem;
         cursor: pointer;
       }
+    }
+  }
+
+  .related {
+    margin-top: 30px;
+
+    h3 {
+      margin: 0;
+      text-transform: capitalize;
     }
   }
 </style>

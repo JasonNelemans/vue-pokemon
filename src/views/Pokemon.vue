@@ -19,7 +19,7 @@
     },
     methods: {
       fetchId() {
-        const id = this.$route.params.id
+        const id = this.$route.params.id;
         this.id = id;
       }
     }

@@ -53,7 +53,7 @@ export default {
         .catch(error => console.log("error: ", error));
     },
     fetchAllPokemon() {
-      fetch("https://pokeapi.co/api/v2/pokemon?limit=10", {
+      fetch("https://pokeapi.co/api/v2/pokemon?limit=12", {
         method: "get"
       })
         .then(response => {
