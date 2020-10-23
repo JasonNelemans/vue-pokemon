@@ -39,8 +39,8 @@
       <router-link to="/"><button class="home-button">Back to Home</button></router-link>
     </div>
     <div v-if="types">
-      <div class="related" v-for="(type, index) in types" :key="index" >
-        <h3>Other {{ type.type.name }} Pokemon</h3>
+      <div class="related-container" v-for="(type, index) in types" :key="index" >
+        <h3>Other <span>{{ type.type.name }}</span> Pokemon:</h3>
         <RelatedPokemon :typeUrl="type.type.url" />
       </div>
     </div>
@@ -200,12 +200,17 @@
     }
   }
 
-  .related {
+  .related-container {
     margin-top: 30px;
 
     h3 {
       margin: 0;
       text-transform: capitalize;
+      color: black;
+
+      span {
+        text-decoration: underline;
+      }
     }
   }
 </style>

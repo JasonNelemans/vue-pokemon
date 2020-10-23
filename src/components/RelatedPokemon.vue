@@ -1,17 +1,17 @@
 <template>
-<div v-if="pokemon">
-  <article v-for="(pokemon, index) in pokemon" :key="index">
-    <img :src="
-              `https://pokeres.bastionbot.org/images/pokemon/${pokemon[0].id}.png`
-            "
-            width="105"
-            height="105"
-            alt="pokemon"/>
-    <h3 >
-      {{ pokemon[0].name }}
-    </h3>
-  </article>
-</div>
+  <div v-if="pokemon" class="related">
+    <article class="related-pokemon" v-for="(pokemon, index) in pokemon" :key="index">
+      <img 
+        :src="`https://pokeres.bastionbot.org/images/pokemon/${pokemon[0].id}.png`"
+        width="105"
+        height="105"
+        alt="pokemon"
+      />
+      <h3 >
+        {{ pokemon[0].name }}
+      </h3>
+    </article>
+  </div>
 </template>
 
 <script lang="ts">
@@ -32,9 +32,9 @@
         fetch(`${this.typeUrl}`, { method: "get"})
           .then(response => response.json())
           .then(data => {
-            console.log(' related data ', data);
             [...Array(3)].map((poke, i) => {
               const randomId = Math.floor(Math.random() * data.pokemon.length);
+              console.log('randomId:', randomId)
               fetch(`${data.pokemon[randomId].pokemon.url}`, {
                 method: "get"
               })
@@ -53,3 +53,14 @@
     }
   }
 </script>
+
+<style lang="scss">
+  .related {
+    display: flex;
+    text-transform: capitalize;
+
+    .related-pokemon {
+      margin: 15px;
+    }
+  }
+</style>
