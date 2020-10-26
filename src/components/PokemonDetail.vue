@@ -56,7 +56,7 @@
       RelatedPokemon
     },
     props: {
-      id: String
+      id: Number
     },
     data() {
       return {
@@ -69,6 +69,7 @@
     },
     methods: {
       fetchPokemon() {
+        this.types = [];
         fetch(`https://pokeapi.co/api/v2/pokemon/${this.id}`, {
         method: "get"
       })

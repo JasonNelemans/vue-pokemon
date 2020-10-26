@@ -34,7 +34,6 @@
           .then(data => {
             [...Array(3)].map((poke, i) => {
               const randomId = Math.floor(Math.random() * data.pokemon.length);
-              console.log('randomId:', randomId)
               fetch(`${data.pokemon[randomId].pokemon.url}`, {
                 method: "get"
               })
