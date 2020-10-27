@@ -1,43 +1,42 @@
 <template>
   <div class="home">
     <h1>Home</h1>
-    <div class="list">
-      <article v-for="(pokemon, index) in pokemons" :key="index">
-        <router-link :to="`/pokemon/${pokemon.id}/`">
-        <div class="image">
-          <img
-            :src="
-              `https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`
-            "
-            width="105"
-            height="105"
-            alt="pokemon"
-          />
-          </div>
-          <h3>{{ pokemon.name }}</h3>
-          Type:
-          <div
-            v-for="(type, index) in pokemon.types"
-            :key="index"
-            class="type-list"
-          >
-            <p>• {{ type.type.name }}</p>
-          </div>
-          <p>Height: {{ pokemon.height }}</p>
-          <p>Weight: {{ pokemon.weight }}</p>
-          <p>Base experience: {{ pokemon.base_experience }}</p>
-        </router-link>
-      </article>
-    </div>
+    <label for="types">Choose a type:</label>
+    <select v-model="selected">
+      <option v-for="option in options" v-bind:value="option.value" :key="option.value">
+        {{ option.text }}
+      </option>
+    </select>
+    <span>Selected: {{ selected }}</span>
+    <button @click="sortedPokemons = pokemons">Refresh</button>
+    <PokemonList :pokemons="sortedPokemons" />
   </div>
 </template>
 
 <script lang="ts">
+import PokemonList from '@/components/PokemonList.vue'
+
 export default {
   name: "home",
+  components: {
+    PokemonList
+  },
   data() {
     return {
       pokemons: [],
+      sortedPokemons: [],
+      types: ['grass', 'poison', 'fire', 'flying', 'water', 'bug'],
+      selected: '-',
+      options: [
+        { text: 'Grass', value: 'grass' },
+        { text: 'Poison', value: 'poison' },
+        { text: 'Fire', value: 'fire' },
+        { text: 'Flying', value: 'flying' },
+        { text: 'Water', value: 'water' },
+        { text: 'Bug', value: 'bug' },
+      ],
+      showAll: true, 
+      showSorted: false
     };
   },
   mounted: function() {
@@ -50,6 +49,7 @@ export default {
         .then(response => response.json())
         .then((pokeData: any) => this.pokemons.push(pokeData))
         .then(() => this.sortById())
+        .then(() => this.sortedPokemons = this.pokemons)
         .catch(error => console.log("error: ", error));
     },
     fetchAllPokemon() {
@@ -68,7 +68,24 @@ export default {
     },
     sortById() {
       this.pokemons.sort((a, b) => a.id - b.id);
+    },
+    sortPokemon() {
+      this.sortedPokemons = [];
+      this.pokemons.forEach(pokemon => {
+        pokemon.types.forEach(type => {
+          if(type.type.name === this.selected) {
+            this.sortedPokemons.push(pokemon)
+          }
+        })
+      })
     }
+  },
+  watch: {
+    selected() {
+      this.sortPokemon();
+      this.showAll === false;
+      this.showSorted === true;
+    },
   }
 };
 </script>
