@@ -2,8 +2,11 @@
   <div class="detail">
     <div class="detail-view">
       <div v-if="pokemon" class="image">
-        <img :src="`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`" alt="pokemon" width="220"
-            height="220" />
+        <PokemonImage 
+          :src="`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`" 
+          :width="'220'" 
+          :height="'220'" 
+        />
       </div>
       <div v-if="pokemon" class="data">
         <h2>{{ pokemon.name }}</h2>
@@ -49,11 +52,13 @@
 
 <script lang="ts">
   import RelatedPokemon from "@/components/RelatedPokemon.vue"
+  import PokemonImage from "@/components/PokemonImage.vue"
 
   export default {
     name: "pokemon-detail",
     components: {
-      RelatedPokemon
+      RelatedPokemon,
+      PokemonImage
     },
     props: {
       id: Number

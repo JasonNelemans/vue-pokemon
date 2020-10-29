@@ -1,6 +1,10 @@
 <template>
   <div class="home">
     <h1>Home</h1>
+    <div class="fetch-buttons">
+      <button v-if="dataObject.previous" @click="apiUrl = dataObject.previous">Previous</button>
+      <button v-if="dataObject.next" @click="apiUrl = dataObject.next">Next</button>
+    </div>
     <label for="types">Choose a type:</label>{{ '  ' }}
     <select v-model="selected">
       <option v-for="option in options" v-bind:value="option.value" :key="option.value">
@@ -36,6 +40,9 @@ export default {
         { text: 'Water', value: 'water' },
         { text: 'Bug', value: 'bug' },
       ],
+      dataObject: {},
+      apiUrl: "https://pokeapi.co/api/v2/pokemon?limit=12&offset=0",
+      display: "none",
     };
   },
   mounted: function() {
@@ -52,13 +59,15 @@ export default {
         .catch(error => console.log("error: ", error));
     },
     fetchAllPokemon() {
-      fetch("https://pokeapi.co/api/v2/pokemon?limit=12", {
+      this.pokemons = []
+      fetch(this.apiUrl, {
         method: "get"
       })
         .then(response => {
           return response.json();
         })
         .then(allPokemon => {
+          this.dataObject = allPokemon
           allPokemon.results.forEach((pokemon: any) =>
             this.fetchPokemonData(pokemon)
           );
@@ -83,11 +92,21 @@ export default {
     selected() {
       this.sortPokemon();
     },
+    apiUrl() {
+      this.fetchAllPokemon();
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+  .fetch-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    text-align: center;
+  }
+
   .list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
