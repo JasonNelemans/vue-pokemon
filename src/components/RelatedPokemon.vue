@@ -1,11 +1,10 @@
 <template>
   <div v-if="pokemon" class="related">
     <article class="related-pokemon" v-for="(pokemon, index) in pokemon" :key="index">
-      <img 
+      <PokemonImage 
         :src="`https://pokeres.bastionbot.org/images/pokemon/${pokemon[0].id}.png`"
-        width="105"
-        height="105"
-        alt="pokemon"
+        :height="'105'"
+        :width="'105'"
       />
       <h3 >
         {{ pokemon[0].name }}
@@ -15,9 +14,14 @@
 </template>
 
 <script lang="ts">
+  import PokemonImage from "@/components/PokemonImage.vue"
+
   export default {
     props: {
       typeUrl: String
+    },
+    components: {
+      PokemonImage
     },
     data() {
       return {

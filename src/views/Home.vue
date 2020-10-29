@@ -1,13 +1,14 @@
 <template>
   <div class="home">
     <h1>Home</h1>
-    <label for="types">Choose a type:</label>
+    <label for="types">Choose a type:</label>{{ '  ' }}
     <select v-model="selected">
       <option v-for="option in options" v-bind:value="option.value" :key="option.value">
         {{ option.text }}
       </option>
     </select>
-    <span>Selected: {{ selected }}</span>
+    {{ '  ' }}
+    <span>Selected: {{ selected }}</span> {{ '  ' }}
     <button @click="sortedPokemons = pokemons">Refresh</button>
     <PokemonList :pokemons="sortedPokemons" />
   </div>
@@ -35,8 +36,6 @@ export default {
         { text: 'Water', value: 'water' },
         { text: 'Bug', value: 'bug' },
       ],
-      showAll: true, 
-      showSorted: false
     };
   },
   mounted: function() {
@@ -83,8 +82,6 @@ export default {
   watch: {
     selected() {
       this.sortPokemon();
-      this.showAll === false;
-      this.showSorted === true;
     },
   }
 };
