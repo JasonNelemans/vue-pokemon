@@ -13,17 +13,15 @@
           />
           </div>
           <h3>{{ pokemon.name }}</h3>
-          Type:
-          <div
-            v-for="(type, index) in pokemon.types"
-            :key="index"
-            class="type-list"
-          >
-            <p>• {{ type.type.name }}</p>
+          <div class="types">
+            <div
+              v-for="(type, index) in pokemon.types"
+              :key="index"
+              class="type"
+            >
+              <p>{{ type.type.name }}</p>
+            </div>
           </div>
-          <p>Height: {{ pokemon.height }}</p>
-          <p>Weight: {{ pokemon.weight }}</p>
-          <p>Base experience: {{ pokemon.base_experience }}</p>
         </router-link>
       </article>
     </div>
@@ -56,15 +54,27 @@
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 10px 10px rgba(0, 0, 0, 0.2);
       border: 4px solid #FFCB05;
 
-      h3 {
+      img {
+        margin-bottom: 10px;
+      }
+
+      h3, h4 {
         margin: 0;
       }
 
-      .type-list {
-        display: inline-block;
+      .types {
+        margin: 10px 0;
+        
+        .type {
+          display: inline-block;
+          border: 1px solid black;
+          border-radius: 20px;
+          margin: 0 5px;
+          background-color: #0A2E50;
 
-        p {
-          margin: 10px 5px 0px 5px;
+          p {
+            margin: 3px 10px;
+          }
         }
       }
 

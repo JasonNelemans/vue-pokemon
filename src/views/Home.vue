@@ -2,8 +2,8 @@
   <div class="home">
     <h1>Home</h1>
     <div class="fetch-buttons">
-      <button @click="changeApiUrl(dataObject.previous)">Previous</button>
-      <button @click="changeApiUrl(dataObject.next)">Next</button>
+      <button class="buttons" @click="changeApiUrl(dataObject.previous)">Previous</button>
+      <button class="buttons" @click="changeApiUrl(dataObject.next)">Next</button>
     </div>
     <label for="types">Choose a type:</label>{{ '  ' }}
     <select v-model="selected">
@@ -112,6 +112,18 @@ export default {
     justify-content: space-between;
     width: 100%;
     text-align: center;
+
+    .buttons {
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        background-color: #f0f0f0;
+        color: #222224;
+        padding: 10px 20px;
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
   }
 
   .list {
