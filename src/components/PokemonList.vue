@@ -41,7 +41,6 @@
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-gap: 25px;
     max-width: 800px;
-    width: 100%;
     color: #fff;
 
     article {

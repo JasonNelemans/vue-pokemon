@@ -1,19 +1,21 @@
 <template>
   <div class="home">
-    <h1>Home</h1>
     <div class="fetch-buttons">
       <button class="buttons" @click="changeApiUrl(dataObject.previous)">Previous</button>
       <button class="buttons" @click="changeApiUrl(dataObject.next)">Next</button>
     </div>
-    <label for="types">Choose a type:</label>{{ '  ' }}
-    <select v-model="selected">
-      <option v-for="option in options" v-bind:value="option.value" :key="option.value">
-        {{ option.text }}
-      </option>
-    </select>
-    {{ '  ' }}
-    <span>Selected: {{ selected }}</span> {{ '  ' }}
-    <button @click="sortedPokemons = pokemons">Refresh</button>
+    <div class="selected">
+      <div>
+        <label for="types">Choose a type:</label>{{ '  ' }}
+        <select v-model="selected">
+          <option v-for="option in options" v-bind:value="option.value" :key="option.value">
+            {{ option.text }}
+          </option>
+        </select>
+      </div>
+      <span>Selected: {{ selected }}</span>
+      <button id="refresh" @click="refreshHandler">Refresh</button>
+    </div>
     <PokemonList :pokemons="sortedPokemons" />
   </div>
 </template>
@@ -77,22 +79,28 @@ export default {
       this.pokemons.sort((a, b) => a.id - b.id);
     },
     sortPokemon() {
-      this.sortedPokemons = [];
-      this.pokemons.forEach(pokemon => {
-        pokemon.types.forEach(type => {
-          if(type.type.name === this.selected) {
-            this.sortedPokemons.push(pokemon)
-          }
+      if(this.selected !== '-') {
+        this.sortedPokemons = [];
+        this.pokemons.forEach(pokemon => {
+          pokemon.types.forEach(type => {
+            if(type.type.name === this.selected) {
+              this.sortedPokemons.push(pokemon)
+            }
+          })
         })
-      })
-      // if(this.sortedPokemons === []) {
-        
-      // }
+        // if(this.sortedPokemons === []) {
+          
+        // }
+      }
     },
     changeApiUrl(apiUrl: string) {
       if(apiUrl !== null) {
         this.apiUrl = apiUrl
       }
+    },
+    refreshHandler() {
+      this.sortedPokemons = this.pokemons;
+      this.selected = '-';
     }
   },
   watch: {
@@ -112,6 +120,7 @@ export default {
     justify-content: space-between;
     width: 100%;
     text-align: center;
+    margin-top: 15px;
 
     .buttons {
         outline: none;
@@ -123,43 +132,34 @@ export default {
         margin-bottom: 20px;
         font-size: 1.2rem;
         cursor: pointer;
+        box-shadow: 0 15px 30px rgba(0,0,0,.2),
+                  0 10px 10px rgba(0,0,0,.2);
     }
   }
 
-  .list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: 25px;
-    max-width: 800px;
-    width: 100%;
-    color: #fff;
+  .selected {
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
 
-    article {
-      background: linear-gradient(to right top, #3d7dca, #306bb3, #225a9c, #134a86, #003a70);
-      padding-top: 15px;
-      text-align: center;
-      text-transform: capitalize;
+    span {
+      margin: 10px;
+    }
+
+    #refresh {
+      margin: 0;
+      width: 70px;
       border-radius: 5px;
+      padding: 6px 5px;
       cursor: pointer;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 10px 10px rgba(0, 0, 0, 0.2);
-      border: 4px solid #FFCB05;
-
-      h3 {
-        margin: 0;
-      }
-
-      .type-list {
-        display: inline-block;
-
-        p {
-          margin: 10px 5px 0px 5px;
-        }
-      }
-
-      a {
-        text-decoration: none;
-        color: inherit;
-      }
+      box-shadow: 0 15px 30px rgba(0,0,0,.2),
+                  0 10px 10px rgba(0,0,0,.2);
+      background-color: #333;
+      color: #efefef;
+      outline: none;
+      border: none;
     }
   }
 </style>
