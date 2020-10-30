@@ -2,8 +2,8 @@
   <div class="home">
     <h1>Home</h1>
     <div class="fetch-buttons">
-      <button v-if="dataObject.previous" @click="apiUrl = dataObject.previous">Previous</button>
-      <button v-if="dataObject.next" @click="apiUrl = dataObject.next">Next</button>
+      <button @click="changeApiUrl(dataObject.previous)">Previous</button>
+      <button @click="changeApiUrl(dataObject.next)">Next</button>
     </div>
     <label for="types">Choose a type:</label>{{ '  ' }}
     <select v-model="selected">
@@ -42,7 +42,6 @@ export default {
       ],
       dataObject: {},
       apiUrl: "https://pokeapi.co/api/v2/pokemon?limit=12&offset=0",
-      display: "none",
     };
   },
   mounted: function() {
@@ -86,6 +85,14 @@ export default {
           }
         })
       })
+      // if(this.sortedPokemons === []) {
+        
+      // }
+    },
+    changeApiUrl(apiUrl: string) {
+      if(apiUrl !== null) {
+        this.apiUrl = apiUrl
+      }
     }
   },
   watch: {
