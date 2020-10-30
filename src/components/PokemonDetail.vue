@@ -61,7 +61,7 @@
       PokemonImage
     },
     props: {
-      id: Number
+      id: String
     },
     data() {
       return {

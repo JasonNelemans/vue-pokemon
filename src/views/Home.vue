@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <h1>Browse Pokemon List</h1>
     <div class="fetch-buttons">
       <button class="buttons" @click="changeApiUrl(dataObject.previous)">Previous</button>
       <button class="buttons" @click="changeApiUrl(dataObject.next)">Next</button>
@@ -17,6 +18,9 @@
       <button id="refresh" @click="refreshHandler">Refresh</button>
     </div>
     <PokemonList :pokemons="sortedPokemons" />
+    <div v-if="sorting && sortedPokemons.length === 0" class="error-match">
+      <h1>Sorry, no match found.</h1>
+    </div>
   </div>
 </template>
 
@@ -32,18 +36,31 @@ export default {
     return {
       pokemons: [],
       sortedPokemons: [],
-      types: ['grass', 'poison', 'fire', 'flying', 'water', 'bug'],
       selected: '-',
       options: [
-        { text: 'Grass', value: 'grass' },
-        { text: 'Poison', value: 'poison' },
+        { text: 'Bug', value: 'bug' },
+        { text: 'Dark', value: 'dark' },
+        { text: 'Dragon', value: 'dragon' },
+        { text: 'Electric', value: 'electric' },
+        { text: 'Fairy', value: 'fairy' },
+        { text: 'Fighting', value: 'fighting' },
         { text: 'Fire', value: 'fire' },
         { text: 'Flying', value: 'flying' },
+        { text: 'Ghost', value: 'ghost' },
+        { text: 'Grass', value: 'grass' },
+        { text: 'Ground', value: 'ground' },
+        { text: 'Ice', value: 'ice' },
+        { text: 'Normal', value: 'normal' },
+        { text: 'Poison', value: 'poison' },
+        { text: 'Psychic', value: 'psychic' },
+        { text: 'Rock', value: 'rock' },
+        { text: 'Steel', value: 'steel' },
         { text: 'Water', value: 'water' },
-        { text: 'Bug', value: 'bug' },
       ],
+      types: [],
       dataObject: {},
       apiUrl: "https://pokeapi.co/api/v2/pokemon?limit=12&offset=0",
+      sorting: false
     };
   },
   mounted: function() {
@@ -80,6 +97,7 @@ export default {
     },
     sortPokemon() {
       if(this.selected !== '-') {
+        this.sorting = true;
         this.sortedPokemons = [];
         this.pokemons.forEach(pokemon => {
           pokemon.types.forEach(type => {
@@ -88,14 +106,12 @@ export default {
             }
           })
         })
-        // if(this.sortedPokemons === []) {
-          
-        // }
       }
     },
     changeApiUrl(apiUrl: string) {
       if(apiUrl !== null) {
         this.apiUrl = apiUrl
+        this.selected = '-'
       }
     },
     refreshHandler() {
@@ -109,12 +125,16 @@ export default {
     },
     apiUrl() {
       this.fetchAllPokemon();
-    }
+    },
   }
 };
 </script>
 
 <style lang="scss" scoped>
+  .home {
+    margin-bottom: 25px;
+  }
+
   .fetch-buttons {
     display: flex;
     justify-content: space-between;
@@ -161,5 +181,10 @@ export default {
       outline: none;
       border: none;
     }
+  }
+
+  .error-match {
+    min-width: 800px;
+    padding: 100px 0;
   }
 </style>
