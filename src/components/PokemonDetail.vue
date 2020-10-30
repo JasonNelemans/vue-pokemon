@@ -39,7 +39,10 @@
           </div>
         </div>
       </div>
-      <router-link to="/"><button class="home-button">Back to Home</button></router-link>
+      <div class="detail-buttons">
+        <router-link to="/"><button class="home-button">Back to Home</button></router-link>
+        <router-link to="/random"><button class="random-button" @click="randomizeId">Randomize</button></router-link>
+      </div>
     </div>
     <div v-if="types">
       <div class="related-container" v-for="(type, index) in types" :key="index" >
@@ -66,7 +69,8 @@
     data() {
       return {
         pokemon: {},
-        types: []
+        types: [], 
+        detailId: this.id
       }
     },
     mounted() {
@@ -75,7 +79,7 @@
     methods: {
       fetchPokemon() {
         this.types = [];
-        fetch(`https://pokeapi.co/api/v2/pokemon/${this.id}`, {
+        fetch(`https://pokeapi.co/api/v2/pokemon/${this.detailId}`, {
         method: "get"
       })
         .then(response => {
@@ -90,10 +94,14 @@
         this.pokemon.types.forEach((type: any) => {
           return this.types.push(type);
         });
+      },
+      randomizeId() {
+        const randomId = Math.floor(Math.random() * 1050) 
+        this.detailId = `${randomId}`;
       }
     },
     watch: {
-      id() {
+      detailId() {
         this.fetchPokemon();
       },
       pokemon() {
@@ -190,6 +198,19 @@
           .type { background-color: #0A2E50; }
           .ability { background-color: #C73015; }
         }
+      }
+
+      .random-button {
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        background-color: #efefef;
+        color: #333;
+        padding: 10px 20px;
+        margin: 0 15px;
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+        cursor: pointer;
       }
 
       .home-button {

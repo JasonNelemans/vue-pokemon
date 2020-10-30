@@ -14,7 +14,7 @@
           </option>
         </select>
       </div>
-      <span>Selected: {{ selected }}</span>
+      <span id="selected-one">Selected: {{ selected }}</span>
       <button id="refresh" @click="refreshHandler">Refresh</button>
     </div>
     <PokemonList :pokemons="sortedPokemons" />
@@ -38,6 +38,7 @@ export default {
       sortedPokemons: [],
       selected: '-',
       options: [
+        { text: '-', value: '-'},
         { text: 'Bug', value: 'bug' },
         { text: 'Dark', value: 'dark' },
         { text: 'Dragon', value: 'dragon' },
@@ -166,6 +167,10 @@ export default {
 
     span {
       margin: 10px;
+    }
+
+    #selected-one {
+      text-transform: capitalize;
     }
 
     #refresh {
