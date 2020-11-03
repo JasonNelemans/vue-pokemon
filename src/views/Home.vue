@@ -1,11 +1,8 @@
 <template>
   <div class="home">
     <h1>Browse Pokemon List</h1>
-    <!-- <div class="fetch-buttons">
-      <button class="buttons" @click="changeApiUrl(dataObject.previous)">Previous</button>
-      <button class="buttons" @click="changeApiUrl(dataObject.next)">Next</button>
-    </div> -->
-    <!-- <div class="selected">
+    <div class="selected">
+      <button id="refresh" @click="refreshHandler">Refresh</button>
       <div>
         <label for="types">Choose a type:</label>{{ '  ' }}
         <select v-model="selected">
@@ -15,18 +12,25 @@
         </select>
       </div>
       <span id="selected-one">Selected: {{ selected }}</span>
-      <button id="refresh" @click="refreshHandler">Refresh</button>
-    </div> -->
-    <PokemonList :pokemons="pokemons" />
-    <!-- <div v-if="sorting && sortedPokemons.length === 0" class="error-match">
+    </div>
+    <div class="fetch-buttons">
+      <button class="buttons" @click="changeStateApiUrl(dataObject.previous)">Previous</button>
+      <button class="buttons" @click="changeStateApiUrl(dataObject.next)">Next</button>
+    </div>
+    <PokemonList :pokemons="sortedPokemons" />
+    <div v-if="sorting && sortedPokemons.length === 0" class="error-match">
       <h1>Sorry, no match found.</h1>
-    </div> -->
+    </div>
+    <div class="fetch-buttons">
+      <button class="buttons" @click="changeStateApiUrl(dataObject.previous)">Previous</button>
+      <button class="buttons" @click="changeStateApiUrl(dataObject.next)">Next</button>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vuex from 'vuex'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 import PokemonList from '@/components/PokemonList.vue'
 
@@ -37,123 +41,100 @@ export default {
   },
   data() {
     return {
-      // pokemons: [],
-      sortedPokemons: [],
-      // selected: '-',
-      // options: [
-      //   { text: '-', value: '-'},
-      //   { text: 'Bug', value: 'bug' },
-      //   { text: 'Dark', value: 'dark' },
-      //   { text: 'Dragon', value: 'dragon' },
-      //   { text: 'Electric', value: 'electric' },
-      //   { text: 'Fairy', value: 'fairy' },
-      //   { text: 'Fighting', value: 'fighting' },
-      //   { text: 'Fire', value: 'fire' },
-      //   { text: 'Flying', value: 'flying' },
-      //   { text: 'Ghost', value: 'ghost' },
-      //   { text: 'Grass', value: 'grass' },
-      //   { text: 'Ground', value: 'ground' },
-      //   { text: 'Ice', value: 'ice' },
-      //   { text: 'Normal', value: 'normal' },
-      //   { text: 'Poison', value: 'poison' },
-      //   { text: 'Psychic', value: 'psychic' },
-      //   { text: 'Rock', value: 'rock' },
-      //   { text: 'Steel', value: 'steel' },
-      //   { text: 'Water', value: 'water' },
-      // ],
+      sortedPokemons: [] as any,
+      selected: '-',
+      sorting: false,
+      options: [
+        { text: '-', value: '-'},
+        { text: 'Bug', value: 'bug' },
+        { text: 'Dark', value: 'dark' },
+        { text: 'Dragon', value: 'dragon' },
+        { text: 'Electric', value: 'electric' },
+        { text: 'Fairy', value: 'fairy' },
+        { text: 'Fighting', value: 'fighting' },
+        { text: 'Fire', value: 'fire' },
+        { text: 'Flying', value: 'flying' },
+        { text: 'Ghost', value: 'ghost' },
+        { text: 'Grass', value: 'grass' },
+        { text: 'Ground', value: 'ground' },
+        { text: 'Ice', value: 'ice' },
+        { text: 'Normal', value: 'normal' },
+        { text: 'Poison', value: 'poison' },
+        { text: 'Psychic', value: 'psychic' },
+        { text: 'Rock', value: 'rock' },
+        { text: 'Steel', value: 'steel' },
+        { text: 'Water', value: 'water' },
+      ],
       // optionsArray: [],
       // types: [],
-      // dataObject: {},
-      // apiUrl: "https://pokeapi.co/api/v2/pokemon?limit=12&offset=0",
-      // sorting: false,
       // loadedTypes: false
     };
   },
   computed: {
-    ...mapState('pokemon', ['dataObject', 'pokemons'])
+    ...mapState('pokemon', ['dataObject', 'pokemons', 'apiUrl'])
   },
   mounted() {
-    this.$store.dispatch('pokemon/fetchAllPokemon')
+    this.fetchAllPokemon();
   },
   methods: {
-    fetchPokemonData(pokemon: any) {
-      const url = pokemon.url;
-      fetch(url, { method: "get" })
-        .then(response => response.json())
-        .then((pokeData: any) => this.pokemons.push(pokeData))
-        .then(() => this.sortById())
-        .then(() => this.sortedPokemons = this.pokemons)
-        .catch(error => console.log("error: ", error));
-    },
-    fetchAllPokemon() {
-      this.pokemons = []
-      fetch(this.apiUrl, {
-        method: "get"
-      })
-        .then(response => {
-          return response.json();
-        })
-        .then(allPokemon => {
-          this.dataObject = allPokemon
-          allPokemon.results.forEach((pokemon: any) =>
-            this.fetchPokemonData(pokemon)
-          );
-        })
-        .catch(error => console.log("error: ", error));
-    },
-    sortById() {
-      this.pokemons.sort((a, b) => a.id - b.id);
-    },
+    ...mapMutations('pokemon', [
+      'changeStateApiUrl'
+    ]),
+    ...mapActions('pokemon', [
+      'fetchAllPokemon'
+    ]),
     sortPokemon() {
       if(this.selected !== '-') {
         this.sorting = true;
         this.sortedPokemons = [];
-        this.pokemons.forEach(pokemon => {
-          pokemon.types.forEach(type => {
+        this.pokemons.forEach((pokemon: any) => {
+          pokemon.types.forEach((type: any) => {
             if(type.type.name === this.selected) {
               this.sortedPokemons.push(pokemon)
             }
           })
         })
-      }
-    },
-    changeApiUrl(apiUrl: string) {
-      if(apiUrl !== null) {
-        this.apiUrl = apiUrl
-        this.selected = '-'
+      } else if(this.selected === '-') {
+        this.sortedPokemons = this.pokemons
       }
     },
     refreshHandler() {
       this.sortedPokemons = this.pokemons;
       this.selected = '-';
     },
-    fetchTypes() {
-      this.pokemons.forEach(pokemon => {
-        pokemon.types.forEach(pokeType => {
-          this.types.push(pokeType.type.name)
-          this.reduceTypeArray();
-        })
-      })
-      this.loadedTypes = true;
-    },
-    reduceTypeArray() {
-      const filteredArray = [...new Set(this.types)]
-      this.types = filteredArray
-    },
-    createOptions() {
-      this.types.forEach(type => {
-        const typeObject = { text: type, value: type};
-        this.optionsArray.push(typeObject);
-      })
-    }
+    // fetchTypes() {
+    //   this.pokemons.forEach(pokemon => {
+    //     pokemon.types.forEach(pokeType => {
+    //       this.types.push(pokeType.type.name)
+    //       this.reduceTypeArray();
+    //     })
+    //   })
+    //   this.loadedTypes = true;
+    // },
+    // reduceTypeArray() {
+    //   const filteredArray = [...new Set(this.types)]
+    //   this.types = filteredArray
+    // },
+    // createOptions() {
+    //   this.types.forEach(type => {
+    //     const typeObject = { text: type, value: type};
+    //     this.optionsArray.push(typeObject);
+    //   })
+    // }
   },
+  watch: {
+    apiUrl() {
+      this.fetchAllPokemon();
+      this.selected = '-'
+    },
+    pokemons() {
+      this.sortedPokemons = this.pokemons;
+    },
+    selected() {
+      this.sortPokemon();
+    },  
+  }
   // watch: {
-  //   selected() {
-  //     this.sortPokemon();
-  //   },
-  //   apiUrl() {
-  //     this.fetchAllPokemon();
-  //   },
   //   sortedPokemons() {
   //     this.fetchTypes();
   //   },

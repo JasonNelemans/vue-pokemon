@@ -1,7 +1,6 @@
 const initialState = () => ({
   pokemons: [],
   sorting: false,
-  selected: "-",
   dataObject: {},
   apiUrl: "https://pokeapi.co/api/v2/pokemon?limit=12&offset=0",
 });
@@ -23,6 +22,11 @@ const mutations = {
   },
   sortById(state: any) {
     state.pokemons.sort((a: any, b: any) => a.id - b.id)
+  },
+  changeStateApiUrl(state: any, payload: any) {
+    if(payload !== null) {
+      state.apiUrl = payload
+    }
   }
 }
 
