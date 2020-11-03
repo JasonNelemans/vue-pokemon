@@ -58,10 +58,12 @@ export default {
         { text: 'Steel', value: 'steel' },
         { text: 'Water', value: 'water' },
       ],
+      optionsArray: [],
       types: [],
       dataObject: {},
       apiUrl: "https://pokeapi.co/api/v2/pokemon?limit=12&offset=0",
-      sorting: false
+      sorting: false,
+      loadedTypes: false
     };
   },
   mounted: function() {
@@ -118,6 +120,25 @@ export default {
     refreshHandler() {
       this.sortedPokemons = this.pokemons;
       this.selected = '-';
+    },
+    fetchTypes() {
+      this.pokemons.forEach(pokemon => {
+        pokemon.types.forEach(pokeType => {
+          this.types.push(pokeType.type.name)
+          this.reduceTypeArray();
+        })
+      })
+      this.loadedTypes = true;
+    },
+    reduceTypeArray() {
+      const filteredArray = [...new Set(this.types)]
+      this.types = filteredArray
+    },
+    createOptions() {
+      this.types.forEach(type => {
+        const typeObject = { text: type, value: type};
+        this.optionsArray.push(typeObject);
+      })
     }
   },
   watch: {
@@ -127,6 +148,12 @@ export default {
     apiUrl() {
       this.fetchAllPokemon();
     },
+    sortedPokemons() {
+      this.fetchTypes();
+    },
+    loadedTypes() {
+      this.createOptions();
+    }
   }
 };
 </script>
