@@ -1,11 +1,11 @@
 <template>
   <div class="home">
     <h1>Browse Pokemon List</h1>
-    <div class="fetch-buttons">
+    <!-- <div class="fetch-buttons">
       <button class="buttons" @click="changeApiUrl(dataObject.previous)">Previous</button>
       <button class="buttons" @click="changeApiUrl(dataObject.next)">Next</button>
-    </div>
-    <div class="selected">
+    </div> -->
+    <!-- <div class="selected">
       <div>
         <label for="types">Choose a type:</label>{{ '  ' }}
         <select v-model="selected">
@@ -16,15 +16,18 @@
       </div>
       <span id="selected-one">Selected: {{ selected }}</span>
       <button id="refresh" @click="refreshHandler">Refresh</button>
-    </div>
-    <PokemonList :pokemons="sortedPokemons" />
-    <div v-if="sorting && sortedPokemons.length === 0" class="error-match">
+    </div> -->
+    <PokemonList :pokemons="pokemons" />
+    <!-- <div v-if="sorting && sortedPokemons.length === 0" class="error-match">
       <h1>Sorry, no match found.</h1>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script lang="ts">
+import Vuex from 'vuex'
+import { mapState, mapActions } from 'vuex'
+
 import PokemonList from '@/components/PokemonList.vue'
 
 export default {
@@ -34,40 +37,43 @@ export default {
   },
   data() {
     return {
-      pokemons: [],
+      // pokemons: [],
       sortedPokemons: [],
-      selected: '-',
-      options: [
-        { text: '-', value: '-'},
-        { text: 'Bug', value: 'bug' },
-        { text: 'Dark', value: 'dark' },
-        { text: 'Dragon', value: 'dragon' },
-        { text: 'Electric', value: 'electric' },
-        { text: 'Fairy', value: 'fairy' },
-        { text: 'Fighting', value: 'fighting' },
-        { text: 'Fire', value: 'fire' },
-        { text: 'Flying', value: 'flying' },
-        { text: 'Ghost', value: 'ghost' },
-        { text: 'Grass', value: 'grass' },
-        { text: 'Ground', value: 'ground' },
-        { text: 'Ice', value: 'ice' },
-        { text: 'Normal', value: 'normal' },
-        { text: 'Poison', value: 'poison' },
-        { text: 'Psychic', value: 'psychic' },
-        { text: 'Rock', value: 'rock' },
-        { text: 'Steel', value: 'steel' },
-        { text: 'Water', value: 'water' },
-      ],
-      optionsArray: [],
-      types: [],
-      dataObject: {},
-      apiUrl: "https://pokeapi.co/api/v2/pokemon?limit=12&offset=0",
-      sorting: false,
-      loadedTypes: false
+      // selected: '-',
+      // options: [
+      //   { text: '-', value: '-'},
+      //   { text: 'Bug', value: 'bug' },
+      //   { text: 'Dark', value: 'dark' },
+      //   { text: 'Dragon', value: 'dragon' },
+      //   { text: 'Electric', value: 'electric' },
+      //   { text: 'Fairy', value: 'fairy' },
+      //   { text: 'Fighting', value: 'fighting' },
+      //   { text: 'Fire', value: 'fire' },
+      //   { text: 'Flying', value: 'flying' },
+      //   { text: 'Ghost', value: 'ghost' },
+      //   { text: 'Grass', value: 'grass' },
+      //   { text: 'Ground', value: 'ground' },
+      //   { text: 'Ice', value: 'ice' },
+      //   { text: 'Normal', value: 'normal' },
+      //   { text: 'Poison', value: 'poison' },
+      //   { text: 'Psychic', value: 'psychic' },
+      //   { text: 'Rock', value: 'rock' },
+      //   { text: 'Steel', value: 'steel' },
+      //   { text: 'Water', value: 'water' },
+      // ],
+      // optionsArray: [],
+      // types: [],
+      // dataObject: {},
+      // apiUrl: "https://pokeapi.co/api/v2/pokemon?limit=12&offset=0",
+      // sorting: false,
+      // loadedTypes: false
     };
   },
-  mounted: function() {
-    this.fetchAllPokemon();
+  computed: {
+    ...mapState('pokemon', ['dataObject', 'pokemons'])
+  },
+  mounted() {
+    this.$store.dispatch('pokemon/fetchAllPokemon')
   },
   methods: {
     fetchPokemonData(pokemon: any) {
@@ -141,20 +147,20 @@ export default {
       })
     }
   },
-  watch: {
-    selected() {
-      this.sortPokemon();
-    },
-    apiUrl() {
-      this.fetchAllPokemon();
-    },
-    sortedPokemons() {
-      this.fetchTypes();
-    },
-    loadedTypes() {
-      this.createOptions();
-    }
-  }
+  // watch: {
+  //   selected() {
+  //     this.sortPokemon();
+  //   },
+  //   apiUrl() {
+  //     this.fetchAllPokemon();
+  //   },
+  //   sortedPokemons() {
+  //     this.fetchTypes();
+  //   },
+  //   loadedTypes() {
+  //     this.createOptions();
+  //   }
+  // }
 };
 </script>
 
