@@ -18,7 +18,7 @@
       this.fetchId();
     },
     methods: {
-      fetchId() {
+      fetchId(): any {
         const id = this.$route.params.id;
         this.id = id;
       }

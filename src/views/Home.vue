@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <h1>Browse Pokemon List</h1>
+    <div class="home-content">
     <div class="selected">
-      <button id="refresh" @click="refreshHandler">Refresh</button>
       <div>
         <label for="types">Choose a type:</label>{{ '  ' }}
         <select v-model="selected">
@@ -25,6 +25,7 @@
       <button class="buttons" @click="changeStateApiUrl(dataObject.previous)">Previous</button>
       <button class="buttons" @click="changeStateApiUrl(dataObject.next)">Next</button>
     </div>
+    </div>
   </div>
 </template>
 
@@ -42,10 +43,10 @@ export default {
   data() {
     return {
       sortedPokemons: [] as any,
-      selected: '-',
+      selected: 'none',
       sorting: false,
       options: [
-        { text: '-', value: '-'},
+        { text: 'none', value: 'none'},
         { text: 'Bug', value: 'bug' },
         { text: 'Dark', value: 'dark' },
         { text: 'Dragon', value: 'dragon' },
@@ -84,7 +85,7 @@ export default {
       'fetchAllPokemon'
     ]),
     sortPokemon() {
-      if(this.selected !== '-') {
+      if(this.selected !== 'none') {
         this.sorting = true;
         this.sortedPokemons = [];
         this.pokemons.forEach((pokemon: any) => {
@@ -94,13 +95,13 @@ export default {
             }
           })
         })
-      } else if(this.selected === '-') {
+      } else if(this.selected === 'none') {
         this.sortedPokemons = this.pokemons
       }
     },
     refreshHandler() {
       this.sortedPokemons = this.pokemons;
-      this.selected = '-';
+      this.selected = 'none';
     },
     // fetchTypes() {
     //   this.pokemons.forEach(pokemon => {
@@ -125,7 +126,7 @@ export default {
   watch: {
     apiUrl() {
       this.fetchAllPokemon();
-      this.selected = '-'
+      this.selected = 'none'
     },
     pokemons() {
       this.sortedPokemons = this.pokemons;
@@ -148,6 +149,11 @@ export default {
 <style lang="scss" scoped>
   .home {
     margin-bottom: 25px;
+    width: inherit;
+
+    .home-content {
+      margin: 20px;
+    }
   }
 
   .fetch-buttons {
@@ -155,9 +161,9 @@ export default {
     justify-content: space-between;
     width: 100%;
     text-align: center;
-    margin-top: 15px;
 
     .buttons {
+        width: 125px;
         outline: none;
         border: none;
         border-radius: 5px;
@@ -187,19 +193,19 @@ export default {
       text-transform: capitalize;
     }
 
-    #refresh {
-      margin: 0;
-      width: 70px;
-      border-radius: 5px;
-      padding: 6px 5px;
-      cursor: pointer;
-      box-shadow: 0 15px 30px rgba(0,0,0,.2),
-                  0 10px 10px rgba(0,0,0,.2);
-      background-color: #333;
-      color: #efefef;
-      outline: none;
-      border: none;
-    }
+    // #refresh {
+    //   margin: 0;
+    //   width: 70px;
+    //   border-radius: 5px;
+    //   padding: 6px 5px;
+    //   cursor: pointer;
+    //   box-shadow: 0 15px 30px rgba(0,0,0,.2),
+    //               0 10px 10px rgba(0,0,0,.2);
+    //   background-color: #333;
+    //   color: #efefef;
+    //   outline: none;
+    //   border: none;
+    // }
   }
 
   .error-match {

@@ -118,7 +118,6 @@
     align-items: center;
     flex-direction: column;
     padding: 30px;
-    width: calc(100% - 20px);
     color: #fff;
 
     .detail-view {
@@ -127,7 +126,6 @@
       align-items: center;
       flex-direction: column;
       width: 100%;
-      max-width: 510px;
       padding: 20px;
       background: linear-gradient(to right top, #3d7dca, #306bb3, #225a9c, #134a86, #003a70);  
       border-radius: 5px;
