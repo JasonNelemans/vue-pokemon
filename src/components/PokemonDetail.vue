@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-  import RelatedPokemon from "@/components/RelatedPokemon.vue"
+  import RelatedPokemon from "@/components/PokemonDetails/RelatedPokemon.vue"
   import PokemonImage from "@/components/PokemonImage.vue"
   import PokemonAttributes from "@/components/PokemonDetails/PokemonAttributes.vue"
 
