@@ -3,6 +3,7 @@ const initialState = () => ({
   sorting: false,
   dataObject: {},
   apiUrl: "https://pokeapi.co/api/v2/pokemon?limit=12&offset=0",
+  selected: 'none'
 });
 
 const state = initialState();
@@ -27,6 +28,9 @@ const mutations = {
     if(payload !== null) {
       state.apiUrl = payload
     }
+  },
+  changeSelected(state: any, payload: any ) {
+    state.selected = payload
   }
 }
 
