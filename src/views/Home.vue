@@ -13,18 +13,12 @@
       </div>
       <span id="selected-one">Selected: {{ selected }}</span>
     </div>
-    <div class="fetch-buttons">
-      <button class="buttons" @click="changeStateApiUrl(dataObject.previous)">Previous</button>
-      <button class="buttons" @click="changeStateApiUrl(dataObject.next)">Next</button>
-    </div>
+    <FetchButtons />
     <PokemonList :pokemons="sortedPokemons" />
     <div v-if="sorting && sortedPokemons.length === 0" class="error-match">
       <h1>Sorry, no match found.</h1>
     </div>
-    <div class="fetch-buttons">
-      <button class="buttons" @click="changeStateApiUrl(dataObject.previous)">Previous</button>
-      <button class="buttons" @click="changeStateApiUrl(dataObject.next)">Next</button>
-    </div>
+    <FetchButtons />
     </div>
   </div>
 </template>
@@ -34,11 +28,13 @@ import Vuex from 'vuex'
 import { mapState, mapActions, mapMutations } from 'vuex'
 
 import PokemonList from '@/components/PokemonList.vue'
+import FetchButtons from '@/components/FetchButtons.vue'
 
 export default {
   name: "home",
   components: {
-    PokemonList
+    PokemonList,
+    FetchButtons
   },
   data() {
     return {
@@ -156,27 +152,27 @@ export default {
     }
   }
 
-  .fetch-buttons {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    text-align: center;
+  // .fetch-buttons {
+  //   display: flex;
+  //   justify-content: space-between;
+  //   width: 100%;
+  //   text-align: center;
 
-    .buttons {
-        width: 125px;
-        outline: none;
-        border: none;
-        border-radius: 5px;
-        background-color: #f0f0f0;
-        color: #222224;
-        padding: 10px 20px;
-        margin-bottom: 20px;
-        font-size: 1.2rem;
-        cursor: pointer;
-        box-shadow: 0 15px 30px rgba(0,0,0,.2),
-                  0 10px 10px rgba(0,0,0,.2);
-    }
-  }
+  //   .buttons {
+  //       width: 125px;
+  //       outline: none;
+  //       border: none;
+  //       border-radius: 5px;
+  //       background-color: #f0f0f0;
+  //       color: #222224;
+  //       padding: 10px 20px;
+  //       margin-bottom: 20px;
+  //       font-size: 1.2rem;
+  //       cursor: pointer;
+  //       box-shadow: 0 15px 30px rgba(0,0,0,.2),
+  //                 0 10px 10px rgba(0,0,0,.2);
+  //   }
+  // }
 
   .selected {
     margin: 15px;
