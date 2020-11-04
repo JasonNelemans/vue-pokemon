@@ -15,7 +15,7 @@
       </div>
     </div>
     <div>
-      <div class="related-container" v-for="(type, index) in pokemon.types" :key="index" >
+      <div class="related-container" v-for="(type, index) in types" :key="index" >
         <h3>Other <span>{{ type.type.name }}</span> Pokemon:</h3>
         <RelatedPokemon :typeUrl="type.type.url" />
       </div>
@@ -44,7 +44,8 @@ export default {
   data() {
     return {
       pokemon: {},
-      detailId: this.id
+      detailId: this.id,
+      types: []
     }
   },
   computed: {
@@ -62,10 +63,12 @@ export default {
   },
   watch: {
     detailId() {
+      this.types = []
       this.fetchPokemon(this.detailId);
     },
     singlePokemon() {
       this.pokemon = this.singlePokemon
+      this.types = this.pokemon.types
     }
   }
 }
