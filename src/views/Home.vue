@@ -44,12 +44,8 @@ export default {
     this.fetchAllPokemon();
   },
   methods: {
-    ...mapMutations('pokemon', [
-      'changeStateApiUrl'
-    ]),
-    ...mapActions('pokemon', [
-      'fetchAllPokemon'
-    ]),
+    ...mapMutations('pokemon', ['changeStateApiUrl']),
+    ...mapActions('pokemon', ['fetchAllPokemon']),
     sortPokemon() {
       if(this.selected !== 'none') {
         this.sorting = true;

@@ -1,5 +1,6 @@
 const initialState = () => ({
   pokemons: [],
+  singlePokemon: {},
   sorting: false,
   dataObject: {},
   apiUrl: "https://pokeapi.co/api/v2/pokemon?limit=12&offset=0",
@@ -30,8 +31,14 @@ const mutations = {
     }
   },
   changeSelected(state: any, payload: any ) {
+    console.log('SELECTED: ', payload)
     state.selected = payload
-  }
+  },
+  updatePokemon(state: any, payload: any) {
+    console.log('UPDATEPOKEMON: ', payload)
+    state.singlePokemon = payload.pokemon
+    console.log('state.singlePokemon', state.singlePokemon)
+  },
 }
 
 const actions = {
@@ -39,9 +46,9 @@ const actions = {
     commit('clearPokemons')
     fetch(state.apiUrl, { method: "get"})
       .then(response => response.json())
-      .then(allPokemon => {
-        commit('updateDataObject', { dataObject: allPokemon })
-        allPokemon.results.forEach((pokemon: any) => {
+      .then(response => {
+        commit('updateDataObject', { dataObject: response })
+        response.results.forEach((pokemon: any) => {
           dispatch({
             type: 'fetchPokemonData',
             payload: pokemon
@@ -50,14 +57,21 @@ const actions = {
       })
       .catch(error => console.log("error: ", error))
   },
-  fetchPokemonData({commit, state}: any, { payload }: any) {
+  fetchPokemonData({commit }: any, { payload }: any) {
     const url = payload.url;
     fetch(url, { method: "get"})
       .then(response => response.json())
       .then((pokeData: any) => commit('pushToPokemons', { pokeData }))
       .then(() => commit('sortById'))
       .catch(error => console.log("error: ", error))
-  }
+  },
+  fetchPokemon({ commit }: any, payload: any) {
+    console.log('PAYLOAD IN FETCH: ', payload)
+    fetch(`https://pokeapi.co/api/v2/pokemon/${payload}`, { method: "get" })
+      .then(response => response.json())
+      .then(pokemon => commit('updatePokemon', { pokemon }))
+      .catch(error => console.log("error: ", error))
+  },
 }
 
 export default {

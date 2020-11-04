@@ -14,8 +14,8 @@
         <router-link to="/random"><button class="random-button" @click="randomizeId">Randomize</button></router-link>
       </div>
     </div>
-    <div v-if="types">
-      <div class="related-container" v-for="(type, index) in types" :key="index" >
+    <div>
+      <div class="related-container" v-for="(type, index) in pokemon.types" :key="index" >
         <h3>Other <span>{{ type.type.name }}</span> Pokemon:</h3>
         <RelatedPokemon :typeUrl="type.type.url" />
       </div>
@@ -24,63 +24,51 @@
 </template>
 
 <script lang="ts">
-  import RelatedPokemon from "@/components/PokemonDetails/RelatedPokemon.vue"
-  import PokemonImage from "@/components/PokemonImage.vue"
-  import PokemonAttributes from "@/components/PokemonDetails/PokemonAttributes.vue"
+import Vuex from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
-  export default {
-    name: "pokemon-detail",
-    components: {
-      RelatedPokemon,
-      PokemonImage,
-      PokemonAttributes
+import RelatedPokemon from "@/components/PokemonDetails/RelatedPokemon.vue"
+import PokemonImage from "@/components/PokemonImage.vue"
+import PokemonAttributes from "@/components/PokemonDetails/PokemonAttributes.vue"
+
+export default {
+  name: "pokemon-detail",
+  components: {
+    RelatedPokemon,
+    PokemonImage,
+    PokemonAttributes
+  },
+  props: {
+    id: String
+  },
+  data() {
+    return {
+      pokemon: {},
+      detailId: this.id
+    }
+  },
+  computed: {
+    ...mapState('pokemon', ['singlePokemon'])
+  },
+  mounted() {
+    this.fetchPokemon(this.detailId);
+  },
+  methods: {
+    ...mapActions('pokemon', ['fetchPokemon']),
+    randomizeId() {
+      const randomId = Math.floor(Math.random() * 1050) 
+      this.detailId = `${randomId}`;
+    }
+  },
+  watch: {
+    detailId() {
+      this.fetchPokemon(this.detailId);
     },
-    props: {
-      id: String
-    },
-    data() {
-      return {
-        pokemon: {},
-        types: [], 
-        detailId: this.id
-      }
-    },
-    mounted() {
-      this.fetchPokemon();
-    },
-    methods: {
-      fetchPokemon() {
-        this.types = [];
-        fetch(`https://pokeapi.co/api/v2/pokemon/${this.detailId}`, {
-        method: "get"
-      })
-        .then(response => {
-          return response.json();
-        })
-        .then(pokemon => {
-          this.pokemon = pokemon;
-        })
-        .catch(error => console.log("error: ", error));
-      },
-      getTypes() {
-        this.pokemon.types.forEach((type: any) => {
-          return this.types.push(type);
-        });
-      },
-      randomizeId() {
-        const randomId = Math.floor(Math.random() * 1050) 
-        this.detailId = `${randomId}`;
-      }
-    },
-    watch: {
-      detailId() {
-        this.fetchPokemon();
-      },
-      pokemon() {
-        this.getTypes();
-      }
+    singlePokemon() {
+      this.pokemon = this.singlePokemon
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
