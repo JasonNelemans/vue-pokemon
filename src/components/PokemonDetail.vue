@@ -109,10 +109,6 @@ export default {
                     0 10px 10px rgba(0,0,0,.2);
       }
 
-      h2 {
-        text-transform: capitalize;
-      }
-
       .random-button {
         outline: none;
         border: none;

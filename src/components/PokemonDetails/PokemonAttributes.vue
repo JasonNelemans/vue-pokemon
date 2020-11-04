@@ -49,6 +49,10 @@
     width: 100%;
     margin-bottom: 40px;
 
+    h2 {
+        text-transform: capitalize;
+    }
+
     .property {
       width: 90%;
       max-width: 400px;
