@@ -1,5 +1,32 @@
 <template>
   <div class="categories">
-    <h1>Categories</h1>
+    <h1>See all generations</h1>
+    <div>
+      <p v-for="(generation, index) in generations" :key="index">
+       <router-link to="">{{ generation.name }}</router-link>
+      </p>
+    </div>
   </div>
 </template>
+
+<script lang="ts">
+import { mapActions, mapState } from 'vuex'
+
+export default {
+  name: "categories",
+  computed: {
+    ...mapState('categories', ['generations'])
+  },
+  mounted() {
+    this.fetchGenerations();
+  },
+  methods: {
+    ...mapActions('categories', ['fetchGenerations']),
+  },
+  watch: {
+    generations() {
+      console.log('generations: ', this.generations)
+    }
+  }
+}
+</script>

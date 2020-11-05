@@ -14,7 +14,6 @@
 </template>
 
 <script lang="ts">
-import Vuex from 'vuex'
 import { mapState, mapActions, mapMutations } from 'vuex'
 
 import PokemonList from '@/components/PokemonList.vue'
