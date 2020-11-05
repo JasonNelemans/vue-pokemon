@@ -19,7 +19,6 @@ const actions = {
     fetch(state.generationUrl, { method: "get"})
       .then(response => response.json())
       .then(response => {
-        console.log('reponse: ', response)
         commit('updateGenerations', response.results)
       })
       .catch(error => console.log("error: ", error))

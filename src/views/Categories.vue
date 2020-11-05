@@ -1,7 +1,7 @@
 <template>
   <div class="categories">
     <h1>See all generations</h1>
-    <div>
+    <div class="generations">
       <p v-for="(generation, index) in generations" :key="index">
        <router-link to="">{{ generation.name }}</router-link>
       </p>
@@ -23,10 +23,19 @@ export default {
   methods: {
     ...mapActions('categories', ['fetchGenerations']),
   },
-  watch: {
-    generations() {
-      console.log('generations: ', this.generations)
-    }
-  }
 }
 </script>
+
+<style lang="scss">
+  .generations {
+    display: flex;
+
+    p {
+      margin: 10px;
+    }
+
+    p::first-letter {
+      text-transform: capitalize;
+    }
+  }
+</style>
