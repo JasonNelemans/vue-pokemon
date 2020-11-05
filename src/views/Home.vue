@@ -88,7 +88,8 @@ export default {
   watch: {
     apiUrl() {
       this.fetchAllPokemon();
-      this.selected = 'none'
+      this.selected = 'none';
+      this.sorting = false;
     },
     pokemons() {
       this.sortedPokemons = this.pokemons;
