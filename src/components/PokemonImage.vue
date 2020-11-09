@@ -16,12 +16,17 @@
       }
     },
     methods: {
-    onImageError() {
-      this.error = true;
+      onImageError() {
+        this.error = true;
+      },
+      getImage() {
+        return this.error ? this.errorImage : this.src
+      }
     },
-    getImage() {
-      return this.error ? this.errorImage : this.src
+    watch: {
+      src() {
+        this.getImage();
+      }
     }
-    },
   }
 </script>

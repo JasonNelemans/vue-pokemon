@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-  import PokemonDetail from "@/components/PokemonDetail.vue"
+  import PokemonDetail from "@/components/PokemonDetails/PokemonDetail.vue"
 
   export default {
     components: {

@@ -40,8 +40,8 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-gap: 25px;
-    max-width: 800px;
     color: #fff;
+    margin: 20px;
 
     article {
       background: linear-gradient(to right top, #3d7dca, #306bb3, #225a9c, #134a86, #003a70);

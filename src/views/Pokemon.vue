@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-  import PokemonDetail from "@/components/PokemonDetail.vue"
+  import PokemonDetail from "@/components/PokemonDetails/PokemonDetail.vue"
 
   export default {
     components: {
@@ -18,7 +18,7 @@
       this.fetchId();
     },
     methods: {
-      fetchId() {
+      fetchId(): any {
         const id = this.$route.params.id;
         this.id = id;
       }

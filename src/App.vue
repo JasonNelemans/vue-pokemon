@@ -26,6 +26,7 @@ export default {
 html,
 body {
   margin: 0 auto;
+  height: 100%;
 }
 
 #app {
@@ -34,14 +35,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-
-  min-height: 100vh;
+  
+  height: inherit;
   display: flex;
   flex-direction: column;
 }
 
 #stretch {
   flex-grow: 1;
+  background: linear-gradient(to bottom, #C0C0C0 0%, #B1B1B1 100%);
 }
 
 .content {
@@ -51,9 +53,7 @@ body {
   flex-direction: column;
   padding-top: 115px;
   padding-bottom: 20px;
-  min-height: 80vh;
   width: calc(100% - 0px);
-  background: linear-gradient(to bottom, #C0C0C0 0%, #B1B1B1 100%);
   
   font-family: "Acme", arial;
   font-size: 1rem;
